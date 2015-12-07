@@ -8,13 +8,12 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var api = require('./routes/api');
+var db = require('./db')
 
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
 var app = express();
-
-app.dbLink = "mongodb://localhost/qs";
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -33,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: 'keyboard cat',
   cookie: { maxAge: (60000 * 24 * 30)},
-  store: new MongoStore({url: app.dbLink})
+  store: new MongoStore({url: db.link})
 }))
 
 

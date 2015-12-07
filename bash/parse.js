@@ -1,7 +1,7 @@
 
 var parseFile = function(data){
-    var lines = data.split('\r\n');
-    // console.log("file line", lines.length);
+    var lines = data.split('\n');
+    console.log("file line", lines.length);
     var iInfo = {
         qs: []
     };
