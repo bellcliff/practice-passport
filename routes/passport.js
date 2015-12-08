@@ -3,7 +3,7 @@ var passport = require('passport');
 var Account = require('../models/account');
 var router = express.Router();
 
-router.post('/register', function(req, res) {
+router.post('/sign', function(req, res) {
     Account.register(new Account({
         username: req.body.username
     }), req.body.password, function(err, account) {
@@ -21,15 +21,16 @@ router.post('/register', function(req, res) {
     });
 });
 
-router.get('/login', function(req, res) {
+router.get('/check', function(req, res) {
+    !!req.user &&
     res.json({
-        user: req.user
-    });
+        usr: req.user.username
+    }) || res.json({})
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
     res.json({
-        usr: req.user
+        usr: req.user.username
     })
 });
 
@@ -39,3 +40,5 @@ router.get('/logout', function(req, res) {
         msg: 'logout successfully'
     })
 });
+
+module.exports = router;
