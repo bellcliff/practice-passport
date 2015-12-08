@@ -2,7 +2,7 @@
 
     'use strict'
 
-    angular.module('login', ['ui.bootstrap'])
+    angular.module('login', ['ui.bootstrap', 'ngMessages'])
         .factory('LoginService', function($http, $rootScope) {
             var EVENT_LOGIN = 'login success';
             var EVENT_LOGOUT = 'logout success';
