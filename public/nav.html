@@ -18,11 +18,7 @@
                 <li ui-sref-active="active"><a ui-sref="new">New Interview</a></li>
                 <li ui-sref-active="active"><a ui-sref="interview">Interview</a></li>
             </ul>
-            <div class="pull-right" ng-controller="LoginCtrl as login">
-                <span ng-show="!!login.usr">Hello {{login.usr}}!</span>
-                <button ng-hide="!!login.usr" type="button" class="btn btn-default navbar-btn" ng-click="login.open()">Sign in</button>
-                <button ng-show="!!login.usr" type="button" class="btn btn-default navbar-btn" ng-click="login.signout()">Sign out</button>
-            </div>
+            <div login-nav></div>
         </div>
     </div>
 </nav>

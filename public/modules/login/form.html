@@ -1,9 +1,17 @@
 <div class="modal-header">
-    <h3>Hello {{usr || "world"}}!</h3>
+    <h3> {{usr || "Welcome"}}!</h3>
 </div>
 <div class="modal-body">
-    <input ng-model="loginUser">
-    <input ng-model="loginPwd">
+    <form class="form">
+        <div class="form-group">
+            <label>User Name</label>
+            <input class="form-control" ng-model="loginUser">
+        </div>
+        <div form-group>
+            <label>Password</label>
+            <input class="form-control" ng-model="loginPwd">
+        </div>
+    </form>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="login(loginUser, loginPwd)">Login</button>
