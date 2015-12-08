@@ -24,9 +24,7 @@
                         usr: usr,
                         pwd: pwd
                     }).success(function(info) {
-                        $rootScope.$broadcast(EVENT_LOGIN, {
-                            usr: usr
-                        })
+                        $rootScope.$broadcast(EVENT_LOGIN, info)
                     });
                 },
                 sign: function(usr, pwd) {

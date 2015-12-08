@@ -7,6 +7,10 @@
             return {
                 templateUrl: '/modules/login/form.html',
                 controller: function($scope) {
+                    $scope.$on(LoginService.EVENT_LOGIN, function(e, info) {
+                        console.log('login finish', info)
+                        $scope.msg = info.msg;
+                    })
                     $scope.login = function(usr, pwd) {
                         LoginService.login(usr, pwd);
                     }
@@ -22,7 +26,7 @@
                 templateUrl: '/modules/login/nav.html',
                 controller: function($uibModal, $scope, $log, LoginService) {
                     $scope.$on(LoginService.EVENT_LOGIN, function(e, info) {
-                        console.log('login success', info)
+                        console.log('login finish', info)
                         $scope.usr = info.usr;
                     })
 
@@ -34,8 +38,7 @@
                         });
 
                         $scope.$on(LoginService.EVENT_LOGIN, function(e, info) {
-                            modalInstance.close();
-                            $scope.usr = info.usr;
+                            !!info.usr && modalInstance.close();
                         })
                     }
 
