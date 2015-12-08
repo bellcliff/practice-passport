@@ -13,6 +13,10 @@ var db = require('./db')
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
+var mongoose = require('mongoose');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
 var app = express();
 
 // view engine setup
@@ -32,19 +36,33 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: 'keyboard cat',
   cookie: { maxAge: (60000 * 24 * 30)},
-  store: new MongoStore({url: db.link})
+  store: new MongoStore({url: db.link}),
+  resave: false,
+  saveUninitialized: false
 }))
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/api', api);
 app.use('/login', require('./routes/login'));
+app.use('/passport', require('./routes/passport'))
 
 // handle all request witch can't be found
 app.all('/*', function(req, res) {
     res.sendfile('public/index.html');
 });
+
+// passport config
+var Account = require('./models/account');
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
+// mongoose
+mongoose.connect('mongodb://localhost/qs');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
