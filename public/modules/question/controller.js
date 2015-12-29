@@ -10,8 +10,12 @@
                     page: self.qPage,
                     psize: self.qSize,
                 }
-                if (!!self.qQuestion) params.qQuestion = self.qQuestion
-                if (!!self.qCompany) params.qCompany = self.qCompany
+                if (!!self.qQuestion) {
+                    params.qQuestion = self.qQuestion;
+                }
+                if (!!self.qCompany) {
+                    params.qCompany = self.qCompany;
+                }
                 return params
             }
 
@@ -35,7 +39,9 @@
             }
 
             self.showInterview = function(iid) {
-                self.showInterviewDetail = Interview.get({id: iid});
+                self.showInterviewDetail = Interview.get({
+                    id: iid
+                });
                 // $uibModal.open({
                 //     template: ""
                 // })
@@ -44,12 +50,15 @@
             self.init = function() {
                 self.qPage = 1
                 self.qSize = 20
-                $scope.$watchGroup(['question.qQuestion', 'question.qCompany'], function(n, o) {
-                    console.log('watch', n, o)
-                    if (n == o) return;
-                    console.log(n, o)
-                    self.loadQuestions()
-                })
+                $scope.$watchGroup(
+                    ['question.qQuestion', 'question.qCompany'],
+                    function(n, o) {
+                        console.log('watch', n, o)
+                        if (n == o) return;
+                        // if filter change, reset page to 1
+                        self.qPage = 1;
+                        self.loadQuestions()
+                    })
                 self.loadQuestions()
             }
 
