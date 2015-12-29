@@ -20,7 +20,7 @@ router.get('/qs', function(req, res, next) {
     var filter = {};
     if (!!req.query.qQuestion) filter.question = new RegExp(req.query.qQuestion, 'i');
     if (!!req.query.qCompany) filter['interview.Client'] = new RegExp(req.query.qCompany, 'i');
-    dbConf.con.then(function(db) {
+    dbConf.connect.then(function(db) {
         return Q.all([
             db.collection('question').find(filter).count(),
             db.collection('question').find(filter, findOption).sort({
@@ -49,7 +49,7 @@ router.post('/qs', function(req, res, next) {
     var interview = req.body.interview
     var questions = req.body.questions
     console.log('insert many', interview, questions)
-    dbConf.con.then(function(db) {
+    dbConf.connect.then(function(db) {
         return db.collection('interview1').insertOne(interview).then(function(iResult) {
             var qInfo = []
             questions.forEach(function(q) {
@@ -68,23 +68,14 @@ router.post('/qs', function(req, res, next) {
     }).catch(console.error)
 })
 
-// router.get('/qs1', function(req, res, next) {
-//     MongoClient.connect('mongodb://localhost:27017/qs').then(function(db) {
-//         return db.collection('question').find().limit(20).toArray();
-//     }).then(function(data){
-//         console.log("data length", data.length)
-//         return res.json(data)
-//     });
-// })
-
 router.get('/it', function(req, res, next) {
-    dbConf.con.then(function(db) {
+    dbConf.connect.then(function(db) {
         return db.collection('interview').find().toArray()
     }).then(res.json.bind(res)).catch(console.error)
 });
 
 router.get('/it/:id', function(req, res, next) {
-    dbConf.con.then(function(db) {
+    dbConf.connect.then(function(db) {
         return db.collection('interview').find({
             _id: new ObjectId(req.params.id)
         }).toArray()

@@ -1,9 +1,10 @@
 var mc = require('mongodb').MongoClient;
+var conf = require('./conf')
 var ObjectId = require('mongodb').ObjectId;
-var dbLink = "mongodb://localhost/qs";
+var dbLink = 'mongodb://' + conf.db.host + '/qs';
 var dbCon = mc.connect(dbLink);
 
 module.exports = {
-	link: dbLink,
-	con: dbCon
+    link: dbLink,
+    connect: dbCon
 }
