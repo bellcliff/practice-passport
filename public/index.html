@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="main">
 
 <head>
   <base href="/">
+<title update-title></title>
   <link rel="stylesheet" type="text/css" href="libs/bootstrap/dist/css/bootstrap.css">
   <script type="text/javascript" src="libs/jquery/dist/jquery.js"></script>
   <script type="text/javascript" src="libs/angular/angular.js"></script>
@@ -12,7 +13,7 @@
   <script type="text/javascript" src="libs/angular-resource/angular-resource.js"></script>
 </head>
 
-<body ng-app="main">
+<body>
   <div ng-include="'nav.html'"></div>
   <div class="container">
     <div ui-view></div>

@@ -38,6 +38,7 @@ app.use(session({
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/api/stat', require('./routes/stat'));
 app.use('/api', api);
 app.use('/login', require('./routes/login'));
 

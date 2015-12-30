@@ -1,48 +1,25 @@
-<div class="panel panel-default media">
-  <div class="panel-heading media-body">
-    <div class="btn-group media-right">
-      <span class="btn btn-default" role="button" ng-click="question.filter.form.open = !question.filter.form.open">Filter By</span>
-      <span class="btn btn-default" role="button" ng-click="question.filter.status.open = !question.filter.status.open">Query Status</span>
-    </div>
-  </div>
-  <div class="panel-collapse collapse" uib-collapse="!question.filter.form.open">
-    <div class="panel-body">
-      <form class="form-inline">
-        <div class="form-group">
-          <label>By Company</label>
-          <input ng-model="question.qCompany" ng-model-options="{debounce: 1000}" class="form-control">
-        </div>
-        <div class="form-group">
-          <label>By Question</label>
-          <input ng-model="question.qQuestion" ng-model-options="{debounce: 1000}" class="form-control">
-        </div>
-        <!-- <button class="btn btn-primary">Search</button> -->
-      </form>
-    </div>
-  </div>
-  <div class="panel-collapse collapse" uib-collapse="!question.filter.status.open">
-    <div class="panel-body">
-      <span>Filter By</span>
-      <pre>{{question.getParams() | json}}</pre>
-      <span>Filter Result</span>
-      <pre>{{"query count: " + question.qCount}}</pre>
-    </div>
-  </div>
-  <table class="table table-striped">
+<table class="table table-striped">
     <tr>
-      <th>Company</th>
-      <th>Question</th>
-      <th>Date</th>
+        <th class="col-md-2">
+            <span ng-show="!bycompany" ng-click="bycompany=!bycompany">Company</span>
+            <input ng-show="bycompany" ng-blur="bycompany=!bycompany" ng-model="question.qCompany"
+            ng-model-options="{debounce: 1000}">
+        </th>
+        <th class="col-md-9">
+            Question
+        </th>
+        <th class="col-md-1">Date</th>
     </tr>
+    <tfoot>
+        <tr>
+            <td colspan="3">Total question: {{question.qCount}}</td>
+        </tr>
+    </tfoot>
     <tr ng-repeat="q in question.qs" ng-click="question.showInterview(q.interview._id)">
-      <td>{{q.interview.Client}}</td>
-      <td>{{q.question}}</td>
-      <td>{{q.interview.Date | date:'MM/dd/yyyy'}}</td>
+        <td ng-attr-title="{{q.interview.Client}}">{{q.interview.Client|limitTo: 20}}</td>
+        <td ng-attr-title="{{q.question}}">{{q.question | limitTo: 120}}</td>
+        <td>{{q.interview.Date | date:'MM/dd/yyyy'}}</td>
     </tr>
-  </table>
-  <hr>
-  <div class="panel-footer">
-    <uib-pagination max-size=10 total-items="question.qCount" items-per-page="question.qSize" ng-model="question.qPage" ng-change="question.loadQuestions()" boundary-links="true"></uib-pagination>
-  </div>
-  <pre>{{question.showInterviewDetail}}</pre>
-</div>
+</table>
+<uib-pagination max-size=10 total-items="question.qCount" items-per-page="question.qSize"
+ng-model="question.qPage" ng-change="question.loadQuestions()" boundary-links="true"></uib-pagination>
