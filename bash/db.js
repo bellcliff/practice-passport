@@ -20,7 +20,6 @@ var saveDB = function(iInfos) {
                             }))
                         })
                 }))
-                .then(db.close.bind(db))
         })
         .catch(console.log.bind(console))
 }

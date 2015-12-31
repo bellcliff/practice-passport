@@ -1,5 +1,5 @@
 var mc = require('mongodb').MongoClient;
-var conf = require('./conf')
+var conf = require(__dirname + '/conf')
 var ObjectId = require('mongodb').ObjectId;
 var dbLink = 'mongodb://' + conf.db.host + '/qs';
 var dbCon = mc.connect(dbLink);

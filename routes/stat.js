@@ -6,13 +6,6 @@ var moment = require('moment');
 
 // interview by year
 router.get('/iy', function(req, res, next) {
-    // var year = req.query.year || 2015;
-    // var ds = new Date(year, 1, 1);
-    // var de = new Date(year, 12, 31);
-    // var match = {
-    //     $match: {
-    //     }
-    // };
     var group = {
         $group: {
             _id: {
@@ -82,7 +75,7 @@ router.get('/im', function(req, res, next) {
                 result[v._id.month] = {
                     m: moment().set({
                         year: year,
-                        month: v._id.month
+                        month: v._id.month - 1
                     }).format('YYYY-MM'),
                     v: v.count
                 }
@@ -95,5 +88,29 @@ router.get('/im', function(req, res, next) {
             next(err);
         });
 });
+
+router.get('/iq', function(req,res,next){
+    var match = {
+        $match: {
+            question: new RegExp(req.query.k, 'i')    
+        }
+    }
+    var group = {
+        $group: {
+            _id: {
+                year: {$year: "$interview.Date"}
+            },
+            count: {
+                $sum: 1
+            }
+        }
+    }
+    dbConf.collection('question').then(function(col){
+        return col.aggregate([match, group]).toArray()
+    }).then(res.json.bind(res)).catch(function(err){
+        console.log('error in query iqk', err)
+        next(err)
+    })
+})
 
 module.exports = router;

@@ -3,7 +3,8 @@
     'use strict';
 
     angular.module('main')
-        .controller('QuestionCtrl', ['$scope', '$http', '$uibModal', 'Interview',
+        .controller('QuestionCtrl', [
+            '$scope', '$http', '$uibModal', 'Interview',
             function($scope, $http, $uibModal, Interview) {
                 var self = this;
                 self.getParams = function() {
@@ -48,6 +49,36 @@
                     // })
                 }
 
+                self.showTrend = function(key) {
+                    $uibModal.open({
+                        animation: $scope.animationsEnabled,
+                        template: '<div id="iyk"></div>',
+                        controller: function($http) {
+                            $http.get('/api/stat/iq', {
+                                params: {
+                                    k: key
+                                }
+                            }).success(function(data) {
+                                data.sort(function(a,b){return a._id.year - b._id.year })
+                                console.log(data)
+                                var xs = [],
+                                    ss = {
+                                        name: 'Question',
+                                        data: []
+                                    };
+                                data.forEach(function(v){
+                                    xs.push(v._id.year)
+                                    ss.data.push(v.count)
+                                })
+                                $('#iyk').highcharts({
+                                    xAxis: {categories:xs},
+                                    series: [ss]
+                                })
+                            })
+                        }
+                    })
+                }
+
                 self.init = function() {
                     self.qPage = 1
                     self.qSize = 10
@@ -66,7 +97,7 @@
                 self.init();
             }
         ])
-        .controller('NewQuestionCtrl', function(){
+        .controller('NewQuestionCtrl', function() {
             console.log('new question ctrl init')
-        });
+        })
 })();

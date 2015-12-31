@@ -6,7 +6,13 @@
             ng-model-options="{debounce: 1000}">
         </th>
         <th class="col-md-9">
-            Question
+            <div class="input-group">
+            <span class="input-group-addon">Question</span>
+                <input class="form-control" placeholder="Search for..." ng-model="question.qQuestion" ng-model-options="{debounce: 1000}">
+                <span class="input-group-btn" ng-show="!!question.qQuestion" onclick>
+                    <button class="btn btn-primary" ng-click="question.showTrend(question.qQuestion)">W</button>
+                </span>
+            </div>
         </th>
         <th class="col-md-1">Date</th>
     </tr>
