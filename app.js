@@ -48,7 +48,7 @@ app.use('/login', require('./routes/login'));
 
 // handle all request witch can't be found
 app.all('/*', function(req, res) {
-    res.sendFile('public/index.html');
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 // catch 404 and forward to error handler

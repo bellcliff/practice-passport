@@ -9,8 +9,8 @@
 
             // set default router
             $urlRouterProvider
-            .when('/question', '/question/list')
-            .otherwise('/question/list')
+                .when('/question', '/question/list')
+                .otherwise('/question/list')
 
             // provide router
             $stateProvider
@@ -31,6 +31,11 @@
                     url: '/interview',
                     templateUrl: 'modules/interview/list.html',
                     controller: 'InterviewCtrl as interview'
+                })
+                .state('stat', {
+                    url: '/stat',
+                    templateUrl: '/modules/stat/main.html',
+                    controller: 'StatCtrl as stat'
                 })
         })
         .factory('Interview', function($resource) {

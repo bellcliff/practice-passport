@@ -3,8 +3,8 @@ var router = express.Router();
 var dbConf = require('../db');
 var Q = require('q');
 
-// interview by month
-router.get('/im', function(req, res, next) {
+// interview by year
+router.get('/iy', function(req, res, next) {
     // var year = req.query.year || 2015;
     // var ds = new Date(year, 1, 1);
     // var de = new Date(year, 12, 31);
@@ -30,9 +30,9 @@ router.get('/im', function(req, res, next) {
             return col.aggregate([group]).toArray()
         })
         .then(function(data) {
-            var result = [];
-            data.forEach(function(v){
-                result.push({year:v._id.year, count:v.count})
+            var result = {};
+            data.forEach(function(v) {
+                result[v._id.year] = v.count
             })
             res.json(result);
         })
