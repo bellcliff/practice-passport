@@ -22,7 +22,31 @@
                         categories: xAxis
                     },
                     series: [series]
-                })
+                });
+            });
+
+            $http.get('/api/stat/im').success(function(data){
+                var xAxis = [],
+                    series = {
+                        name: 'Interview in 2015',
+                        data: []
+                    };
+                data.forEach(function(v) {
+                    if (!v) return;
+                    xAxis.push(v.m);
+                    series.data.push(v.v);
+                });
+                $('#im').highcharts({
+                    title: {
+                        text: 'Monthly Interview trend',
+                        x: -20
+                    },
+                    xAxis: {
+                        categories: xAxis
+                    },
+                    series: [series]
+                });
+                
             })
         }
 
