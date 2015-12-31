@@ -3,6 +3,21 @@
     angular.module('main').controller('StatCtrl', [
         '$scope', '$http',
         function($scope, $http) {
+            var show = function(id, xs, ss, title) {
+                $(id).highcharts({
+                    chart: {
+                        height: 300
+                    },
+                    title: {
+                        text: title || 'Interview Trend',
+                        x: -20
+                    },
+                    xAxis: {
+                        categories: xs
+                    },
+                    series: [ss]
+                });
+            };
             $http.get('/api/stat/iy').success(function(data) {
                 var xAxis = [],
                     series = {
@@ -13,19 +28,10 @@
                     xAxis.push(y);
                     series.data.push(data[y]);
                 }
-                $('#iy').highcharts({
-                    title: {
-                        text: 'Year Interview trend',
-                        x: -20
-                    },
-                    xAxis: {
-                        categories: xAxis
-                    },
-                    series: [series]
-                });
+                show('#iy', xAxis, series, 'Yearly Interview')
             });
 
-            $http.get('/api/stat/im').success(function(data){
+            $http.get('/api/stat/im').success(function(data) {
                 var xAxis = [],
                     series = {
                         name: 'Interview in 2015',
@@ -36,17 +42,8 @@
                     xAxis.push(v.m);
                     series.data.push(v.v);
                 });
-                $('#im').highcharts({
-                    title: {
-                        text: 'Monthly Interview trend',
-                        x: -20
-                    },
-                    xAxis: {
-                        categories: xAxis
-                    },
-                    series: [series]
-                });
-                
+                show('#im', xAxis, series, 'Monthly Interview of 2015')
+
             })
         }
 
