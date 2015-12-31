@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var api = require('./routes/api');
-var db = require('./db')
+var db = require('./db');
 
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
@@ -30,9 +30,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-  secret: 'keyboard cat',
-  cookie: { maxAge: (60000 * 24 * 30)},
-  store: new MongoStore({url: db.link})
+    secret: 'keyboard cat',
+    cookie: {
+        maxAge: (60000 * 24 * 30)
+    },
+    store: new MongoStore({
+        url: db.link
+    })
 }))
 
 
@@ -44,7 +48,7 @@ app.use('/login', require('./routes/login'));
 
 // handle all request witch can't be found
 app.all('/*', function(req, res) {
-    res.sendfile('public/index.html');
+    res.sendFile('public/index.html');
 });
 
 // catch 404 and forward to error handler
