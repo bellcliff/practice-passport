@@ -113,4 +113,10 @@ router.get('/iq', function(req,res,next){
     })
 })
 
+router.get('/ic', function(){
+    dbConf.collection('interview').then(function(col){
+        return col.aggregate().toArray()
+    }).then(res.json.bind(res)).catch(function(){})
+})
+
 module.exports = router;
